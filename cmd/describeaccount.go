@@ -21,7 +21,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createDescribeAccountCmd() *cobra.Command {
+func CreateDescribeAccountCmd() *cobra.Command {
 	var params DescribeAccountParams
 	cmd := &cobra.Command{
 		Use:          "account",
@@ -39,7 +39,7 @@ func createDescribeAccountCmd() *cobra.Command {
 }
 
 func init() {
-	describeCmd.AddCommand(createDescribeAccountCmd())
+	describeCmd.AddCommand(CreateDescribeAccountCmd())
 }
 
 type DescribeAccountParams struct {

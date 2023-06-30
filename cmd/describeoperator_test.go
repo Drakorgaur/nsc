@@ -30,7 +30,7 @@ func TestDescribeOperator_Single(t *testing.T) {
 	defer ts.Done(t)
 
 	pub := ts.GetOperatorPublicKey(t)
-	stdout, _, err := ExecuteCmd(createDescribeOperatorCmd())
+	stdout, _, err := ExecuteCmd(CreateDescribeOperatorCmd())
 	require.NoError(t, err)
 	require.Contains(t, stdout, pub)
 	require.Contains(t, stdout, " operator ")
@@ -45,7 +45,7 @@ func TestDescribeOperator_Raw(t *testing.T) {
 		Raw = oldRaw
 	}()
 
-	stdout, _, err := ExecuteCmd(createDescribeOperatorCmd())
+	stdout, _, err := ExecuteCmd(CreateDescribeOperatorCmd())
 	require.NoError(t, err)
 
 	oc, err := jwt.DecodeOperatorClaims(stdout)
@@ -61,7 +61,7 @@ func TestDescribeOperator_Multiple(t *testing.T) {
 
 	ts.AddOperator(t, "A")
 
-	_, _, err := ExecuteCmd(createDescribeOperatorCmd())
+	_, _, err := ExecuteCmd(CreateDescribeOperatorCmd())
 	require.NoError(t, err)
 }
 
@@ -77,7 +77,7 @@ func TestDescribeOperator_MultipleWithContext(t *testing.T) {
 
 	pub := ts.GetOperatorPublicKey(t)
 
-	stdout, _, err := ExecuteCmd(createDescribeOperatorCmd())
+	stdout, _, err := ExecuteCmd(CreateDescribeOperatorCmd())
 	require.NoError(t, err)
 	require.Contains(t, stdout, pub)
 	require.Contains(t, stdout, " B ")
@@ -92,7 +92,7 @@ func TestDescribeOperator_MultipleWithFlag(t *testing.T) {
 
 	pub := ts.GetOperatorPublicKey(t)
 
-	stdout, _, err := ExecuteCmd(createDescribeOperatorCmd(), "--name", "B")
+	stdout, _, err := ExecuteCmd(CreateDescribeOperatorCmd(), "--name", "B")
 	require.NoError(t, err)
 	require.Contains(t, stdout, " B ")
 	require.Contains(t, stdout, pub)
@@ -102,7 +102,7 @@ func TestDescribeOperator_MultipleWithBadOperator(t *testing.T) {
 	ts := NewTestStore(t, "operator")
 	defer ts.Done(t)
 
-	_, _, err := ExecuteCmd(createDescribeOperatorCmd(), "--name", "C")
+	_, _, err := ExecuteCmd(CreateDescribeOperatorCmd(), "--name", "C")
 	require.Error(t, err)
 }
 
@@ -110,7 +110,7 @@ func TestDescribeOperator_AccountServerURL(t *testing.T) {
 	ts := NewTestStore(t, "O")
 	defer ts.Done(t)
 
-	stdout, _, err := ExecuteCmd(createDescribeOperatorCmd(), "--name", "O")
+	stdout, _, err := ExecuteCmd(CreateDescribeOperatorCmd(), "--name", "O")
 	require.NoError(t, err)
 	require.NotContains(t, stdout, "Account JWT Server")
 
@@ -124,7 +124,7 @@ func TestDescribeOperator_AccountServerURL(t *testing.T) {
 	err = ts.Store.StoreRaw([]byte(token))
 	require.NoError(t, err)
 
-	stdout, _, err = ExecuteCmd(createDescribeOperatorCmd(), "--name", "O")
+	stdout, _, err = ExecuteCmd(CreateDescribeOperatorCmd(), "--name", "O")
 	require.NoError(t, err)
 	require.Contains(t, stdout, u)
 }
@@ -133,7 +133,7 @@ func TestDescribeOperator_OperatorServiceURLs(t *testing.T) {
 	ts := NewTestStore(t, "O")
 	defer ts.Done(t)
 
-	stdout, _, err := ExecuteCmd(createDescribeOperatorCmd(), "--name", "O")
+	stdout, _, err := ExecuteCmd(CreateDescribeOperatorCmd(), "--name", "O")
 	require.NoError(t, err)
 	require.NotContains(t, stdout, "Operator Service URLs")
 
@@ -147,7 +147,7 @@ func TestDescribeOperator_OperatorServiceURLs(t *testing.T) {
 	_, err = ts.Store.StoreClaim([]byte(token))
 	require.NoError(t, err)
 
-	stdout, _, err = ExecuteCmd(createDescribeOperatorCmd(), "--name", "O")
+	stdout, _, err = ExecuteCmd(CreateDescribeOperatorCmd(), "--name", "O")
 	require.NoError(t, err)
 	require.Contains(t, stdout, "Operator Service URLs")
 	require.Contains(t, stdout, "nats://localhost:4222")

@@ -138,7 +138,7 @@ func Test_ImportUserFromDescribe(t *testing.T) {
 	require.NoError(t, err)
 
 	// generate a jwt with describe, and import it
-	cmd := createDescribeUserCmd()
+	cmd := CreateDescribeUserCmd()
 	cmd.Flags().BoolVarP(&Raw, "raw", "R", false, "output the raw JWT (exclusive of long-ids)")
 	fp := filepath.Join(ts.Dir, "u.jwt")
 	_, _, err = ExecuteCmd(cmd, "--raw", "--output-file", fp)
@@ -150,7 +150,7 @@ func Test_ImportUserFromDescribe(t *testing.T) {
 	require.NoError(t, os.Remove(fp))
 
 	// generate a jwt with describe that is not armored, and import it
-	cmd = createDescribeUserCmd()
+	cmd = CreateDescribeUserCmd()
 	cmd.Flags().BoolVarP(&Raw, "raw", "R", false, "output the raw JWT (exclusive of long-ids)")
 	stdout, _, err := ExecuteCmd(cmd, "--raw")
 	require.NoError(t, err)

@@ -24,7 +24,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createDescribeOperatorCmd() *cobra.Command {
+func CreateDescribeOperatorCmd() *cobra.Command {
 	var params DescribeOperatorParams
 	cmd := &cobra.Command{
 		Use:          "operator",
@@ -42,7 +42,7 @@ func createDescribeOperatorCmd() *cobra.Command {
 }
 
 func init() {
-	describeCmd.AddCommand(createDescribeOperatorCmd())
+	describeCmd.AddCommand(CreateDescribeOperatorCmd())
 }
 
 type DescribeOperatorParams struct {
